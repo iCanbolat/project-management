@@ -20,7 +20,7 @@ const categories = [
 
 const schema = yup
   .object({
-    name: yup.string().max(20, 'You have reached maximum character').required(),
+    name: yup.string().max(30, 'You have reached maximum character').required(),
     details: yup.string().required('Explain your task details shortly'),
     dueDate: yup.string().required('Select due date'),
     assignedUsers: yup.array().required('Assign 1 person at least'),
