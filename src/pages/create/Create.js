@@ -27,7 +27,7 @@ const schema = yup
     category: yup
       .mixed()
       .oneOf(['development', 'design', 'sales', 'marketing'])
-      .optional(),
+      .required(),
   })
   .required();
 
