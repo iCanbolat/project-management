@@ -20,7 +20,6 @@ const schema = yup
 export default function ProjectComments({ project }) {
   const { user } = useAuthContext();
   const { updateDocument, response } = useFirestore('projects');
-  const [newComment, setNewComment] = useState('');
 
   const {
     register,
