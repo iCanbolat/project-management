@@ -1,9 +1,7 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 
-// styles
 import './App.css'
 
-// pages & components
 import Dashboard from './pages/dashboard/Dashboard'
 import Create from './pages/create/Create'
 import Login from './pages/login/Login'

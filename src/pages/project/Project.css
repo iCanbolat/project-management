@@ -39,6 +39,7 @@
   background-color: #fff;
   padding: 30px;
   border-radius: 4px;
+  max-width:90vh;
 }
 .project-summary .due-date {
   margin: 10px 0;
@@ -49,11 +50,15 @@
   margin: 30px 0;
   color: var(--text-color);
   line-height: 1.8em;
+  word-break: break-all;
   font-size: 0.9em;
 }
 .project-summary h4 {
   color: var(--text-color);
   font-size: 0.9em;
+}
+.project-summary h2 {
+  word-break: break-all;
 }
 .project-summary .assigned-users {
   display: flex;

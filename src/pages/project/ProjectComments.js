@@ -4,19 +4,38 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useFirestore } from '../../hooks/useFirestore';
 import Avatar from '../../components/Avatar';
 import { formatDistanceToNow } from 'date-fns';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup
+  .object({
+    content: yup
+      .string()
+      .max(30, 'You have reached maximum character')
+      .required(),
+  })
+  .required();
 
 export default function ProjectComments({ project }) {
   const { user } = useAuthContext();
   const { updateDocument, response } = useFirestore('projects');
   const [newComment, setNewComment] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    resetField,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
+  const onSubmit = async ({ content }) => {
     const commentToAdd = {
       displayName: user.displayName,
       photoURL: user.photoURL,
-      content: newComment,
+      content,
       createdAt: timestamp.fromDate(new Date()),
       id: Math.random(),
     };
@@ -25,7 +44,7 @@ export default function ProjectComments({ project }) {
       comments: [...project.comments, commentToAdd],
     });
     if (!response.error) {
-      setNewComment('');
+      resetField('content');
     }
   };
 
@@ -42,7 +61,11 @@ export default function ProjectComments({ project }) {
                 <p>{comment.displayName}</p>
               </div>
               <div className='comment-date'>
-                <p>{formatDistanceToNow(comment.createdAt.toDate(), { addSuffix: true })}</p>
+                <p>
+                  {formatDistanceToNow(comment.createdAt.toDate(), {
+                    addSuffix: true,
+                  })}
+                </p>
               </div>
               <div className='comment-content'>
                 <p>{comment.content}</p>
@@ -51,12 +74,19 @@ export default function ProjectComments({ project }) {
           ))}
       </ul>
 
-      <form className='add-comment' onSubmit={handleSubmit}>
+      <form className='add-comment' onSubmit={handleSubmit(onSubmit)}>
         <label>
           <span>Add new comment:</span>
-          <textarea onChange={(e) => setNewComment(e.target.value)} value={newComment}></textarea>
+          <textarea {...register('content')}></textarea>
         </label>
-        <button className='btn'>Add Comment</button>
+        {errors.content && (
+          <p className='error'>
+            <small>{errors.content.message}</small>{' '}
+          </p>
+        )}
+        <button type='submit' className='btn'>
+          Add Comment
+        </button>
       </form>
     </div>
   );

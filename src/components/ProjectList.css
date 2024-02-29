@@ -15,6 +15,7 @@
 .project-list h4 {
   font-size: 0.9em;
   color: var(--heading-color);
+  word-break: break-all;
 }
 .project-list p {
   color: var(--text-color);

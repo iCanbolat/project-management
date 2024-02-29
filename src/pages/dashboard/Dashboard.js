@@ -2,11 +2,9 @@ import { useCollection } from '../../hooks/useCollection'
 import { useState } from 'react'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
-// components
 import ProjectList from '../../components/ProjectList'
 import ProjectFilter from './ProjectFilter'
 
-// styles
 import './Dashboard.css'
 
 export default function Dashboard() {
